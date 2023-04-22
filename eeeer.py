@@ -3,20 +3,19 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 
 excel_data = pd.read_excel('test.xlsx')
 
-data = pd.DataFrame(excel_data, columns=['name', 'inn', 'debit_date','debit_balance','guarantee'])
+data = pd.DataFrame(excel_data, columns=['name', 'inn', 'debit_date','debit_balance','guarantee','total'])
 
 print("The content of the file is:\n", data)
-print (data.shape)
-w = data.iloc[0,3]
-e = data.iloc[0,2]
-for i in range(data):
-    if i > 3 :
-        
-        w = data.iloc[(0+1),3]
-        e = data.iloc[(0+1),2]
 
-# A = ['Проблемная задолженность в сумме', data.iloc[0,3], 'рублей признана безнадежной и списана на внебалансовые счета',data.iloc[0,2] ]
-# total_value = [A,'B','C']
-# data.insert(loc=len(data.columns), column='total', value=total_value)
-# print(data)
-# data.to_excel('test.xlsx')
+h = data.count()[0]
+n = 0
+for i in range(h):
+    if data.iloc[n,4] == 1.0:
+        data.at [n, 'total'] = 'Что-то здесь ' + str(data.iloc[n,3] ) + 'и что-то здесь' + str(data.iloc[n,2] ) + 'и вроде тута шото.' 
+        n += 1
+    else:
+        data.at [n, 'total'] = 'Проблемная задолженность в сумме ' + str(data.iloc[n,3] ) + 'рублей признана безнадежной и списана на внебалансовые счета ' + str(data.iloc[n,2] )
+        n += 1
+
+print(data)
+data.to_excel('test.xlsx')
